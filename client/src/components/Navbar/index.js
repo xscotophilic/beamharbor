@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import GoogleAuth from '../GoogleAuth';
 import './Navbar.css';
 
 class Navbar extends Component {
@@ -14,7 +15,7 @@ class Navbar extends Component {
                     <nav>
                         <ul>
                             <li><Link to="/">ALL STREAMS</Link></li>
-                            <li><Link to="/">SIGN IN WITH GOOGLE</Link></li>
+                            <li><Link to="/"><GoogleAuth /></Link></li>
                             <li><a href="https://xscotophilic.ml/">MY PORTFOLIO</a></li>
                         </ul>
                     </nav>

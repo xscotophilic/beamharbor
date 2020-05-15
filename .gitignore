@@ -1,2 +1,8 @@
 
 .DS_Store
+client/.DS_Store
+client/node_modules
+
+# apis
+.env
+client/.env
