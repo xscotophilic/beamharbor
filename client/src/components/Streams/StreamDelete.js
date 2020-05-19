@@ -40,19 +40,33 @@ class StreamDelete extends Component {
     };
 
     render() {
+        if (this.props.stream && this.props.currentUserId && (this.props.stream.userId === this.props.currentUserId)) {
+            return (
+                <Modal
+                    title='Delete Stream'
+                    content={this.renderContent()}
+                    actions={this.renderActions()}
+                    onDismiss={() => history.push('/')}
+                />
+            );
+        } else if (this.props.stream && this.props.currentUserId && (this.props.currentUserId !== this.props.stream.userId)) {
+            return (
+                <div className="ui container" style={{ marginTop: '50px' }}>
+                    <div style={{ textAlign: 'center', fontSize: '20px' }}>Unauthorised.</div>
+                </div>
+            );
+        }
         return (
-            <Modal
-                title='Delete Stream'
-                content={this.renderContent()}
-                actions={this.renderActions()}
-                onDismiss={() => history.push('/')}
-            />
-        );
+            <div className="ui active center loader"></div>
+        )
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return { stream: state.streams[ownProps.match.params.id] };
+    return {
+        stream: state.streams[ownProps.match.params.id],
+        currentUserId: state.auth.userId
+    };
 };
 
 export default connect(
