@@ -11,17 +11,33 @@ class StreamCreate extends Component {
     };
 
     render() {
-        return (
-            <div className="ui container" style={{ marginTop: '15px' }}>
-                <h3>Create a Stream</h3>
-                <StreamForm onSubmit={this.onSubmit} />
-            </div>
-        );
+        if (this.props.isSignedIn) {
+            return (
+                <div className="ui container" style={{ marginTop: '15px' }}>
+                    <h3>Create a Stream</h3>
+                    <StreamForm onSubmit={this.onSubmit} />
+                </div>
+            );
+        } else if (this.props.isSignedIn === null) {
+            return (
+                <div className="ui active center loader"></div>
+            );
+        } else if (!this.props.isSignedIn) {
+            return (
+                <div className="ui container" style={{ marginTop: '50px' }}>
+                    <div style={{ textAlign: 'center', fontSize: '20px' }}>Login First.</div>
+                </div>
+            );
+        }
     }
 }
 
+const mapStateToProps = (state) => {
+    return { isSignedIn: state.auth.isSignedIn }
+};
+
 export default connect(
-    null,
+    mapStateToProps,
     {
         createStream
     }
