@@ -1,9 +1,14 @@
 
 .DS_Store
-client/.DS_Store
+
 client/.DS_Store
 client/node_modules
+
+REST-api/.DS_Store
 REST-api/node_modules
+
+rtmp-server/.DS_Store
+rtmp-server/node_modules
 
 # apis
 .env
