@@ -5,4 +5,6 @@
 #### RTMP SERVER provides real time video streaming.
 <br />
 <br />
-#### You can use OBS to stream. To watch stream you don't need any dependencies.
+You can use OBS to stream. To watch stream you don't need any dependencies.
+<br />
+More instructions are inside each folder.
