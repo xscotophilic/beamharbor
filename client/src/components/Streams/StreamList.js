@@ -23,15 +23,21 @@ class StreamList extends Component {
     renderList = () => {
         return this.props.streams.map(stream => {
             return (
-                <div className="item" key={stream.id} style={{ padding: '12px' }}>
+                <div
+                    className="item"
+                    key={stream.id}
+                    style={{ padding: '12px' }}
+                >
                     {this.renderAdmin(stream)}
                     <i className="large middle aligned icon camera" />
-                    <div className="content">
-                        {stream.title}
-                        <div className="description">
-                            {stream.description}
+                    <Link to={`/streams/${stream.id}`} className="content">
+                        <div className="content">
+                            {stream.title}
+                            <div className="description">
+                                {stream.description}
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             );
         });
