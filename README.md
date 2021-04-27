@@ -8,3 +8,5 @@
 You can use OBS to stream. To watch stream you don't need any dependencies.
 <br />
 More instructions are inside each folder.
+
+Live on: https://streamtv.netlify.app/
