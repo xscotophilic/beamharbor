@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import withParams from '../../utils/withParams';
 
 import history from '../../history';
 import Modal from '../Modal';
@@ -9,11 +10,14 @@ import { fetchStream, deleteStream } from '../../actions';
 class StreamDelete extends Component {
 
     componentDidMount() {
-        this.props.fetchStream(this.props.match.params.id);
+        const { params, match } = this.props;
+        const id = params?.id || match?.params?.id;
+        this.props.fetchStream(id);
     }
 
     renderActions = () => {
-        const { id } = this.props.match.params;
+        const { params, match } = this.props;
+        const id = params?.id || match?.params?.id;
         return (
             <React.Fragment>
                 <button
@@ -63,16 +67,17 @@ class StreamDelete extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    const id = ownProps.params?.id || ownProps.match?.params?.id;
     return {
-        stream: state.streams[ownProps.match.params.id],
+        stream: state.streams[id],
         currentUserId: state.auth.userId
     };
 };
 
-export default connect(
+export default withParams(connect(
     mapStateToProps,
     {
         fetchStream,
         deleteStream
     }
-)(StreamDelete);
+)(StreamDelete));

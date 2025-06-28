@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import withParams from '../../utils/withParams';
 import { connect } from 'react-redux';
 import flv from 'flv.js';
 
@@ -32,7 +33,7 @@ class StreamShow extends Component {
         const { id } = this.props.match.params;
         this.player = flv.createPlayer({
             type: 'flv',
-            url: `http://localhost:8000/live/${id}.flv`
+            url: `${import.meta.env.VITE_STREAMER_BASE_URL}/live/${id}.flv`
         });
         this.player.attachMediaElement(this.videoRef.current);
         this.player.load();
@@ -44,23 +45,37 @@ class StreamShow extends Component {
                 <div className="ui active center loader"></div>
             );
         }
+        const { stream, currentUserId, isSignedIn } = this.props;
+        const isOwner = isSignedIn && stream.userId === currentUserId;
+        const rtmpBase = import.meta.env.VITE_RTMP_SERVER_URL;
         return (
             <div className="ui container" style={{ marginTop: '10px' }}>
+                <h3>{stream.title}</h3>
+                <p>{stream.description}</p>
                 <video ref={this.videoRef} style={{ width: '100%' }} controls />
-                <h3>{this.props.stream.title}</h3>
-                {this.props.stream.description}
+                {isOwner && (
+                    <div style={{ marginTop: '10px', color: 'grey', fontStyle: 'italic' }}>
+                        You can stream your video at <code>{`${rtmpBase}/live/${stream.id}`}</code>
+                    </div>
+                )}
             </div>
         );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return { stream: state.streams[ownProps.match.params.id], isSignedIn: state.auth.isSignedIn }
+    return {
+        stream: state.streams[ownProps.match.params.id],
+        isSignedIn: state.auth.isSignedIn,
+        currentUserId: state.auth.userId
+    }
 };
 
-export default connect(
+const ConnectedStreamShow = connect(
     mapStateToProps,
     {
         fetchStream
     }
 )(StreamShow);
+
+export default withParams(ConnectedStreamShow);

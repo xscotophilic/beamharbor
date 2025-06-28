@@ -4,15 +4,20 @@ import _ from 'lodash';
 
 import { fetchStream, editStream } from '../../actions';
 import StreamForm from './StreamForm';
+import withParams from '../../utils/withParams';
 
 class StreamEdit extends Component {
 
     componentDidMount() {
-        this.props.fetchStream(this.props.match.params.id);
+        const { params, match } = this.props;
+        const id = params?.id || match?.params?.id;
+        this.props.fetchStream(id);
     }
 
     onSubmit = (formValues) => {
-        this.props.editStream(this.props.match.params.id, formValues);
+        const { params, match } = this.props;
+        const id = params?.id || match?.params?.id;
+        this.props.editStream(id, formValues);
     };
 
     render() {
@@ -41,16 +46,17 @@ class StreamEdit extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    const id = ownProps.params?.id || ownProps.match?.params?.id;
     return {
-        stream: state.streams[ownProps.match.params.id],
+        stream: state.streams[id],
         currentUserId: state.auth.userId
-    }
+    };
 };
 
-export default connect(
+export default withParams(connect(
     mapStateToProps,
     {
         fetchStream,
         editStream
     }
-)(StreamEdit);
+)(StreamEdit));

@@ -1,0 +1,21 @@
+{
+  "name": "streamer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo 'No build step defined for streamer' && exit 0",
+    "test": "echo 'No streamer tests defined' && exit 0"
+  },
+  "author": "xscotophilic",
+  "license": "ISC",
+  "dependencies": {
+    "node-media-server": "^4.0.18",
+    "dotenv": "^17.0.0"
+  }
+}

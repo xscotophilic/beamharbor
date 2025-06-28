@@ -20,47 +20,43 @@ class StreamList extends Component {
         }
     };
 
-    renderList = () => {
+    renderCards = () => {
         return this.props.streams.map(stream => {
             return (
                 <div
-                    className="item"
+                    className="ui card"
                     key={stream.id}
-                    style={{ padding: '12px' }}
+                    style={{ margin: '1em', flex: '1 1 300px' }}
                 >
-                    {this.renderAdmin(stream)}
-                    <i className="large middle aligned icon camera" />
-                    <Link to={`/streams/${stream.id}`} className="content">
-                        <div className="content">
+                    <Link to={`/streams/${stream.id}`} className="content" style={{ display: 'block', color: '#000' }}>
+                        <i className="big middle aligned icon camera" style={{ float: 'right' }} />
+                        <div className="header" style={{ color: '#000', fontWeight: 'bold' }}>
                             {stream.title}
-                            <div className="description">
-                                {stream.description}
-                            </div>
+                        </div>
+                                                <div className="description" style={{ marginTop: '6px' }}>
+                            {stream.description}
                         </div>
                     </Link>
+                    {stream.userId === this.props.currentUserId && (
+                        <div className="extra content" style={{ textAlign: 'right' }}>
+                            <Link to={`/streams/edit/${stream.id}`} className="ui tiny button primary">Edit</Link>
+                            <Link to={`/streams/delete/${stream.id}`} className="ui tiny button negative">Delete</Link>
+                        </div>
+                    )}
                 </div>
             );
         });
     };
 
-    renderCreate() {
-        if (this.props.isSignedIn) {
-            return (
-                <div style={{ textAlign: 'right' }}>
-                    <Link to="/streams/new" className="ui button black">Create Stream</Link>
-                </div>
-            );
-        }
-    }
 
     render() {
         return (
             <div className="ui container" style={{ marginTop: '10px' }}>
                 <h2>Streams</h2>
-                <div className="ui celled list">
-                    {this.renderList()}
+                <div className="ui link cards" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
+                    {this.renderCards()}
                 </div>
-                {this.renderCreate()}
+
             </div>
         );
     }
